@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
 <body>
     
     <div class="container">
-        <div class="row">
+        <div class="row g-3">
             <div class="col-12">
                 <h1 class="text-center">ESP32 - Wether Station</h1>
                 <p class="text-center">This is a simple weather station that uses an ESP32 and a DHT11 sensor to measure temperature and humidity.</p>
@@ -32,6 +32,13 @@
                     </div>
                 </div>
             </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Led Control</h5>
+                        <button class="btn btn-primary" id="led1">Led 1</button>
+                        <button class="btn btn-primary" id="led2">Led 2</button>
+                    </div>
         </div>
 
 
@@ -50,8 +57,30 @@
                 });
         };
 
+
         updateData();
         setInterval(updateData, 5000);
+
+        const led1 = document.getElementById('led1');
+        const led2 = document.getElementById('led2');
+
+        led1.addEventListener('click', () => {
+            fetch('/led1')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    led1.innerText = data == "LED1 is ON" ? 'Led 1 ON' : 'Led 1 OFF';
+                });
+        });
+
+        led2.addEventListener('click', () => {
+            fetch('/led2')
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    led2.innerText = data == "LED2 is ON" ? 'Led 2 ON' : 'Led 2 OFF';
+                });
+        });
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>

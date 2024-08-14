@@ -54,8 +54,20 @@ void setup() {
     server.send(200, "text/json", "{\"humidity\":"+String(dht.readHumidity())+",\"temperature\":"+String(dht.readTemperature())+"}");
   });
 
+  server.on("/led1", HTTP_GET, []() {
+    digitalWrite(2, !digitalRead(2));
+    server.send(200, "text/plain", "LED1 is ON");
+  });
+
+  server.on("/led2", HTTP_GET, []() {
+    digitalWrite(4, !digitalRead(4));
+    server.send(200, "text/plain", "LED2 is OFF");
+  });
+
   server.begin();
   
+  pinMode(2, OUTPUT);
+  pinMode(4, OUTPUT);
 }
 
 int counter = 0;
