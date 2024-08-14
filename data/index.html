@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- bootstrup -->
+    <link href="https://cdn.jsdelivr.net/npm/fastbootstrap@2.2.0/dist/css/fastbootstrap.min.css" rel="stylesheet" integrity="sha256-V6lu+OdYNKTKTsVFBuQsyIlDiRWiOmtC8VQ8Lzdm2i4=" crossorigin="anonymous">
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="text-center">ESP32 - Wether Station</h1>
+                <p class="text-center">This is a simple weather station that uses an ESP32 and a DHT11 sensor to measure temperature and humidity.</p>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Temperature</h5>
+                        <p class="card-text">The temperature is <span id="temperature">0</span>°C</p>
+                    </div>
+                </div> 
+            </div> 
+
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Humidity</h5>
+                        <p class="card-text">The humidity is <span id="humidity">0</span>%</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <script>
+        const temperature = document.getElementById('temperature');
+        const humidity = document.getElementById('humidity');
+
+        const updateData = () => {
+            fetch('/data')
+                .then(response => response.json())
+                .then(data => {
+                    temperature.innerText = data.temperature;
+                    humidity.innerText = data.humidity;
+                });
+        };
+
+        updateData();
+        setInterval(updateData, 5000);
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
